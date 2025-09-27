@@ -1,126 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <head>
-        <title>Blueprints</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <script src="/webjars/jquery/jquery.min.js"></script>
-        <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet"
-          href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-    </head>
+    <title>Blueprints</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente REST - Blueprints</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .info-section {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            border-left: 4px solid #007bff;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #333;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .total-points {
-            font-size: 18px;
-            font-weight: bold;
-            color: #28a745;
-            margin-top: 15px;
-        }
-    </style>
+    
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
     <div class="container">
-        <h1>Cliente REST - Blueprints</h1>
+        <h1>Blueprints</h1>
         
-        <!-- Campo para captura del autor -->
+        
         <div class="form-group">
             <label for="author-input">Autor:</label>
-            <input type="text" id="author-input" placeholder="Ingrese el nombre del autor">
+            <input type="text" id="author-input" class="form-control" placeholder="Ingrese el nombre del autor">
         </div>
         
         <!-- Botón para obtener blueprints -->
         <div class="form-group">
-            <button id="get-blueprints-btn">Get Blueprints</button>
+            <button id="get-blueprints-btn" class="btn btn-primary">Get Blueprints</button>
         </div>
         
         <!-- Campo para mostrar el autor seleccionado -->
-        <div class="info-section">
+        <div class="form-group">
             <label for="selected-author">Autor Seleccionado:</label>
-            <div id="selected-author">-</div>
+            <div id="selected-author" class="form-control-static">-</div>
         </div>
         
         <!-- Tabla para mostrar los planos -->
         <div class="form-group">
             <h3>Listado de Planos</h3>
-            <table id="blueprints-table">
+            <table id="blueprints-table" class="table table-striped">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -135,9 +48,9 @@
         </div>
         
         <!-- Campo para mostrar el total de puntos -->
-        <div class="info-section">
+        <div class="form-group">
             <label for="total-points">Total de Puntos:</label>
-            <div id="total-points" class="total-points">0</div>
+            <div id="total-points" class="form-control-static">0</div>
         </div>
     </div>
 

@@ -7,6 +7,8 @@ package edu.eci.arsw.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  *
@@ -14,6 +16,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("edu.eci.arsw")
-public class BlueprintsConfiguration {
+public class BlueprintsConfiguration implements WebMvcConfigurer {
     
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Configurar WebJars para servir recursos estáticos
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 }
