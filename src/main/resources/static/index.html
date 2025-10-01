@@ -5,103 +5,286 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="/js/apimock.js"></script>
+    <script src="/js/apiclient.js"></script>
+    <script src="/js/app.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@300;400;700&display=swap');
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #d0d0d0 100%);
+            font-family: 'Comic Neue', cursive;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .main-header {
+            background: linear-gradient(135deg, #000 0%, #333 50%, #666 100%);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fff;
+        }
+        
+        .main-header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8em;
+            color: #fff;
+            text-shadow: 3px 3px 0px #000, 6px 6px 0px #333;
+            margin: 0;
+            display: inline-block;
+        }
+        
+        .author-section {
+            background: #fff;
+            padding: 15px;
+            border: 3px solid #000;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            float: right;
+        }
+        
+        .blueprints-section {
+            background: #fff;
+            padding: 20px;
+            border: 3px solid #000;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            float: left;
+            width: 48%;
+            margin-right: 2%;
+        }
+        
+        .canvas-section {
+            background: #fff;
+            padding: 20px;
+            border: 3px solid #000;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            float: right;
+            width: 48%;
+            margin-left: 2%;
+        }
+        
+        .canvas-container {
+            text-align: center;
+        }
+        
+        #blueprint-canvas {
+            border: 4px solid #000;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        #blueprint-canvas:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .total-points {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #fff;
+        }
+        
+        .current-blueprint {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #fff;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            border: 3px solid #fff;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #333 0%, #000 100%);
+        }
+        
+        .btn-sm {
+            background: linear-gradient(135deg, #666 0%, #000 100%);
+            border: 2px solid #fff;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #000 0%, #666 100%);
+        }
+        
+        .form-control {
+            border: 3px solid #000;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1em;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #333;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+            outline: none;
+        }
+        
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid #000;
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            padding: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        
+        .table tbody tr {
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background: linear-gradient(135deg, #666 0%, #000 100%);
+            transform: scale(1.02);
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .table tbody td {
+            border: none;
+            padding: 15px;
+        }
+        
+        h3, h4 {
+            font-family: 'Fredoka One', cursive;
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .control-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .canvas-section {
+                float: none;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 20px;
+            }
+            
+            .author-section {
+                float: none;
+                display: block;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Blueprints</h1>
-        
-        
-        <div class="form-group">
-            <label for="author-input">Autor:</label>
-            <input type="text" id="author-input" class="form-control" placeholder="Ingrese el nombre del autor">
+        <!-- Header Section -->
+        <div class="main-header clearfix">
+            <h1>Blueprints</h1>
+            <div class="author-section">
+                <label for="author-input" class="control-label">Author:</label>
+                <input type="text" id="author-input" class="form-control" placeholder="Enter author name">
+                <button id="get-blueprints-btn" class="btn btn-primary">Get blueprints</button>
+            </div>
         </div>
-        
-        <!-- Botón para obtener blueprints -->
-        <div class="form-group">
-            <button id="get-blueprints-btn" class="btn btn-primary">Get Blueprints</button>
-        </div>
-        
-        <!-- Campo para mostrar el autor seleccionado -->
-        <div class="form-group">
-            <label for="selected-author">Autor Seleccionado:</label>
-            <div id="selected-author" class="form-control-static">-</div>
-        </div>
-        
-        <!-- Tabla para mostrar los planos -->
-        <div class="form-group">
-            <h3>Listado de Planos</h3>
-            <table id="blueprints-table" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Autor</th>
-                        <th>Número de Puntos</th>
-                    </tr>
-                </thead>
-                <tbody id="blueprints-tbody">
-                    <!-- Los datos se cargarán dinámicamente aquí -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Campo para mostrar el total de puntos -->
-        <div class="form-group">
-            <label for="total-points">Total de Puntos:</label>
-            <div id="total-points" class="form-control-static">0</div>
+
+        <!-- Main Content -->
+        <div class="clearfix">
+            <!-- Left Column: Blueprints List -->
+            <div class="blueprints-section">
+                <h3 id="author-blueprints-title">Author's blueprints:</h3>
+                
+                <table id="blueprints-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Blueprint name</th>
+                            <th>Number of points</th>
+                            <th>Open</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blueprints-tbody">
+                        <!-- Los datos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+                
+                <div class="total-points">
+                    <span>Total user points: </span>
+                    <span id="total-points">0</span>
+                </div>
+            </div>
+            
+            <!-- Right Column: Canvas -->
+            <div class="canvas-section">
+                <h4>Current blueprint: <span id="current-blueprint-name">-</span></h4>
+                
+                <div class="canvas-container">
+                    <canvas id="blueprint-canvas" width="400" height="300"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Script para funcionalidad básica -->
-    <script>
-        // Referencias a los elementos del DOM
-        const authorInput = document.getElementById('author-input');
-        const getBlueprintsBtn = document.getElementById('get-blueprints-btn');
-        const selectedAuthor = document.getElementById('selected-author');
-        const blueprintsTable = document.getElementById('blueprints-table');
-        const blueprintsTbody = document.getElementById('blueprints-tbody');
-        const totalPoints = document.getElementById('total-points');
-
-        // Función para manejar el clic del botón
-        getBlueprintsBtn.addEventListener('click', function() {
-            const author = authorInput.value.trim();
-            if (author) {
-                selectedAuthor.textContent = author;
-                // Aquí se implementaría la lógica para obtener los blueprints
-                console.log('Obteniendo blueprints para:', author);
-            } else {
-                alert('Por favor ingrese un nombre de autor');
-            }
-        });
-
-        // Función para limpiar la tabla
-        function clearTable() {
-            blueprintsTbody.innerHTML = '';
-            totalPoints.textContent = '0';
-        }
-
-        // Función para actualizar la tabla con datos
-        function updateTable(blueprints) {
-            clearTable();
-            let total = 0;
-            
-            blueprints.forEach(blueprint => {
-                const row = document.createElement('tr');
-                const pointCount = blueprint.points ? blueprint.points.length : 0;
-                total += pointCount;
-                
-                row.innerHTML = `
-                    <td>${blueprint.name || '-'}</td>
-                    <td>${blueprint.author || '-'}</td>
-                    <td>${pointCount}</td>
-                `;
-                blueprintsTbody.appendChild(row);
-            });
-            
-            totalPoints.textContent = total;
-        }
-    </script>
 </body>
 </html>
